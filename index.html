@@ -514,6 +514,22 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .live-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--bird);
+      animation: livePulse 2s ease-in-out infinite;
+    }
+    @keyframes livePulse {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.3); }
     }
     .token-ca-block {
       background: var(--forest);
@@ -896,7 +912,7 @@
       <div class="token-header fade-up">
         <p class="section-label">Tokenomics</p>
         <h2 class="section-title">Simple. Clean. Fair.</h2>
-        <p class="section-sub">No hidden allocations. No complex mechanics. Just a community token built on a foundation that matters.</p>
+        <p class="section-sub">No hidden allocations. No complex mechanics. Just a community token built on a foundation that matters. Live data via DexScreener.</p>
       </div>
       <div class="token-grid fade-up">
         <div class="token-card">
@@ -904,16 +920,16 @@
           <div class="token-card-label">Total Supply</div>
         </div>
         <div class="token-card">
-          <div class="token-card-value">0%</div>
-          <div class="token-card-label">Buy / Sell Tax</div>
+          <div class="token-card-value" id="live-mcap">—</div>
+          <div class="token-card-label">Market Cap <span class="live-dot"></span></div>
         </div>
         <div class="token-card">
-          <div class="token-card-value">🔥</div>
-          <div class="token-card-label">LP Burned</div>
+          <div class="token-card-value" id="live-liq">—</div>
+          <div class="token-card-label">Liquidity <span class="live-dot"></span></div>
         </div>
         <div class="token-card">
-          <div class="token-card-value">SOL</div>
-          <div class="token-card-label">Network</div>
+          <div class="token-card-value" id="live-price">—</div>
+          <div class="token-card-label">Price USD <span class="live-dot"></span></div>
         </div>
       </div>
       <div class="token-ca-block fade-up">
@@ -1017,6 +1033,37 @@
         setTimeout(() => copied.style.display = 'none', 2000);
       });
     }
+
+    // ── LIVE DEXSCREENER DATA ──
+    const PAIR = 'ALavJqjeynegmxbRTqdZaTVREx59HnDqYHYGJcicbJZx';
+    const API  = `https://api.dexscreener.com/latest/dex/pairs/solana/${PAIR}`;
+
+    function fmt(n, decimals = 2) {
+      if (n >= 1e6) return '$' + (n / 1e6).toFixed(decimals) + 'M';
+      if (n >= 1e3) return '$' + (n / 1e3).toFixed(decimals) + 'K';
+      return '$' + n.toFixed(decimals);
+    }
+    function fmtPrice(p) {
+      const n = parseFloat(p);
+      if (n < 0.0001) return '$' + n.toExponential(2);
+      return '$' + n.toFixed(6);
+    }
+
+    async function fetchLiveData() {
+      try {
+        const res = await fetch(API);
+        const data = await res.json();
+        const pair = data.pairs?.[0] || data.pair;
+        if (!pair) return;
+        const mcap = pair.marketCap || pair.fdv;
+        document.getElementById('live-mcap').textContent  = mcap  ? fmt(mcap)               : '—';
+        document.getElementById('live-liq').textContent   = pair.liquidity?.usd ? fmt(pair.liquidity.usd) : '—';
+        document.getElementById('live-price').textContent = pair.priceUsd ? fmtPrice(pair.priceUsd) : '—';
+      } catch(e) { /* silent fail — dashes stay */ }
+    }
+
+    fetchLiveData();
+    setInterval(fetchLiveData, 30000); // refresh every 30s
 
     // ── COPY CA (tokenomics) ──
     function copyCABtn(btn) {

@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>$TIWAIWAKA — Aotearoa Born. Solana Built.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark:        #0b1a0e;
+      --darker:      #060f08;
+      --forest:      #122b15;
+      --green:       #1e4a24;
+      --green-mid:   #2d6335;
+      --gold:        #c9a84c;
+      --gold-light:  #e8c96a;
+      --cream:       #f0ead8;
+      --muted:       #8a9e8d;
+      --bird:        #4a9e5c;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--darker);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 48px;
+      transition: background 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(6,15,8,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s, color 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; color: var(--gold); }
+    .nav-cta {
+      background: var(--gold);
+      color: var(--darker) !important;
+      padding: 9px 22px;
+      border-radius: 4px;
+      font-weight: 600 !important;
+      opacity: 1 !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--gold-light) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      overflow: hidden;
+    }
+
+    /* Animated forest background */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 50% 110%, rgba(30,74,36,0.6) 0%, transparent 70%),
+        radial-gradient(ellipse 80% 60% at 20% 80%, rgba(18,43,21,0.8) 0%, transparent 60%),
+        radial-gradient(ellipse 80% 60% at 80% 80%, rgba(18,43,21,0.8) 0%, transparent 60%),
+        linear-gradient(180deg, #060f08 0%, #0b1a0e 50%, #060f08 100%);
+      z-index: 0;
+    }
+
+    /* Floating particle leaves */
+    .particles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--bird);
+      opacity: 0;
+      animation: float linear infinite;
+    }
+    @keyframes float {
+      0%   { transform: translateY(110vh) translateX(0) scale(0.5); opacity: 0; }
+      10%  { opacity: 0.4; }
+      90%  { opacity: 0.15; }
+      100% { transform: translateY(-10vh) translateX(60px) scale(1.2); opacity: 0; }
+    }
+
+    /* Bird SVG animation */
+    .hero-bird {
+      position: relative;
+      z-index: 2;
+      margin-bottom: 32px;
+      animation: birdFloat 6s ease-in-out infinite;
+    }
+    @keyframes birdFloat {
+      0%, 100% { transform: translateY(0px) rotate(-2deg); }
+      50%       { transform: translateY(-14px) rotate(2deg); }
+    }
+    .hero-bird svg {
+      width: 120px;
+      height: 120px;
+      filter: drop-shadow(0 0 30px rgba(74,158,92,0.5));
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 760px; }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      opacity: 0.9;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      line-height: 1.0;
+      color: var(--cream);
+      margin-bottom: 24px;
+    }
+    .hero-title span { color: var(--gold); }
+
+    .hero-maori {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .hero-translation {
+      font-size: 0.85rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      margin-bottom: 48px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--darker);
+      padding: 14px 32px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--cream);
+      padding: 14px 32px;
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      border: 1px solid rgba(240,234,216,0.25);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+    .hero-ca {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(201,168,76,0.08);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.72rem;
+      color: var(--gold-light);
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: background 0.2s;
+      max-width: 100%;
+      word-break: break-all;
+    }
+    .hero-ca:hover { background: rgba(201,168,76,0.14); }
+    .ca-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .ca-copied {
+      font-size: 0.65rem;
+      color: var(--bird);
+      display: none;
+    }
+
+    /* ── SCROLL INDICATOR ── */
+    .scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.4;
+    }
+    .scroll-hint span {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50%       { opacity: 0.9; transform: scaleY(1.2); }
+    }
+
+    /* ── SECTION BASE ── */
+    section {
+      padding: 100px 24px;
+    }
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      opacity: 0.85;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.15;
+      margin-bottom: 20px;
+      color: var(--cream);
+    }
+    .section-sub {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 600px;
+    }
+
+    /* ── THE BIRD ── */
+    .bird-section {
+      background: var(--dark);
+      border-top: 1px solid rgba(201,168,76,0.08);
+      border-bottom: 1px solid rgba(201,168,76,0.08);
+    }
+    .bird-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .bird-image-wrap {
+      position: relative;
+    }
+    .bird-glow {
+      position: absolute;
+      inset: -40px;
+      background: radial-gradient(ellipse, rgba(74,158,92,0.2) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: glowPulse 4s ease-in-out infinite;
+    }
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50%       { opacity: 1; transform: scale(1.08); }
+    }
+    .bird-icon-large {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 380px;
+      display: block;
+      margin: 0 auto;
+    }
+    .bird-icon-large svg {
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 0 60px rgba(74,158,92,0.4));
+    }
+    .bird-text h2 { margin-bottom: 24px; }
+    .bird-text p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .bird-text p:last-child { margin-bottom: 0; }
+    .bird-quote {
+      border-left: 3px solid var(--gold);
+      padding-left: 20px;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--cream);
+      line-height: 1.5;
+      margin: 32px 0;
+    }
+
+    /* ── PRINCIPLES ── */
+    .principles-section {
+      background: var(--darker);
+    }
+    .principles-header {
+      text-align: center;
+      margin-bottom: 72px;
+    }
+    .principles-header .section-sub {
+      margin: 0 auto;
+    }
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .principle-card {
+      position: relative;
+      background: var(--forest);
+      padding: 48px 36px;
+      overflow: hidden;
+      transition: background 0.3s;
+      cursor: default;
+    }
+    .principle-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .principle-card:hover { background: rgba(30,74,36,0.6); }
+    .principle-card:hover::before { opacity: 1; }
+    .principle-number {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      opacity: 0.7;
+    }
+    .principle-maori {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--cream);
+      margin-bottom: 8px;
+    }
+    .principle-english {
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      opacity: 0.8;
+    }
+    .principle-text {
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: var(--muted);
+    }
+    .principle-icon {
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+      font-size: 2rem;
+      opacity: 0.12;
+    }
+
+    /* ── ABOUT THE PROJECT ── */
+    .about-section {
+      background: var(--dark);
+      border-top: 1px solid rgba(201,168,76,0.08);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .about-text p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .about-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .stat-card {
+      background: var(--forest);
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 8px;
+      padding: 28px 32px;
+    }
+    .stat-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── TOKENOMICS ── */
+    .token-section {
+      background: var(--darker);
+      border-top: 1px solid rgba(201,168,76,0.08);
+    }
+    .token-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    .token-header .section-sub { margin: 0 auto; }
+    .token-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .token-card {
+      background: var(--forest);
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 10px;
+      padding: 32px 24px;
+      text-align: center;
+      transition: border-color 0.3s, transform 0.2s;
+    }
+    .token-card:hover {
+      border-color: rgba(201,168,76,0.3);
+      transform: translateY(-4px);
+    }
+    .token-card-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .token-card-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .token-ca-block {
+      background: var(--forest);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 10px;
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .token-ca-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .token-ca-value {
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      color: var(--gold-light);
+      word-break: break-all;
+    }
+    .copy-btn {
+      background: var(--gold);
+      color: var(--darker);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .copy-btn:hover { background: var(--gold-light); }
+
+    /* ── COMMUNITY ── */
+    .community-section {
+      background: var(--dark);
+      border-top: 1px solid rgba(201,168,76,0.08);
+      text-align: center;
+    }
+    .community-inner { max-width: 640px; margin: 0 auto; }
+    .community-inner .section-title { margin-bottom: 16px; }
+    .community-inner .section-sub {
+      margin: 0 auto 48px;
+      text-align: center;
+    }
+    .social-links {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--forest);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 8px;
+      padding: 14px 24px;
+      text-decoration: none;
+      color: var(--cream);
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    }
+    .social-link:hover {
+      border-color: var(--gold);
+      background: rgba(30,74,36,0.5);
+      transform: translateY(-3px);
+    }
+    .social-link svg { width: 18px; height: 18px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--darker);
+      border-top: 1px solid rgba(201,168,76,0.1);
+      padding: 48px 24px;
+      text-align: center;
+    }
+    .footer-inner { max-width: 700px; margin: 0 auto; }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .footer-proverb {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+    .footer-proverb-en {
+      font-size: 0.8rem;
+      color: rgba(138,158,141,0.6);
+      margin-bottom: 36px;
+    }
+    .footer-links {
+      display: flex;
+      gap: 28px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .footer-links a {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-fine {
+      font-size: 0.7rem;
+      color: rgba(138,158,141,0.4);
+      line-height: 1.6;
+    }
+
+    /* ── FADE-IN ANIMATIONS ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .bird-grid,
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .principles-grid { grid-template-columns: 1fr; }
+      .token-grid { grid-template-columns: repeat(2, 1fr); }
+      .token-ca-block { flex-direction: column; text-align: center; }
+      .hero-ca { font-size: 0.62rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#" class="nav-logo">$TIWAIWAKA</a>
+    <ul class="nav-links">
+      <li><a href="#bird">The Bird</a></li>
+      <li><a href="#principles">Principles</a></li>
+      <li><a href="#tokenomics">Token</a></li>
+      <li><a href="#community">Community</a></li>
+      <li><a href="https://raydium.io" target="_blank" class="nav-cta">Buy Now</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="particles" id="particles"></div>
+
+    <div class="hero-bird">
+      <!-- Fantail SVG — abstract bird silhouette -->
+      <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Fan tail feathers -->
+        <path d="M60 72 L28 108" stroke="#4a9e5c" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+        <path d="M60 72 L36 112" stroke="#4a9e5c" stroke-width="2.5" stroke-linecap="round" opacity="0.75"/>
+        <path d="M60 72 L48 114" stroke="#4a9e5c" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/>
+        <path d="M60 72 L60 115" stroke="#c9a84c" stroke-width="3" stroke-linecap="round"/>
+        <path d="M60 72 L72 114" stroke="#4a9e5c" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/>
+        <path d="M60 72 L84 112" stroke="#4a9e5c" stroke-width="2.5" stroke-linecap="round" opacity="0.75"/>
+        <path d="M60 72 L92 108" stroke="#4a9e5c" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+        <!-- Body -->
+        <ellipse cx="60" cy="58" rx="14" ry="18" fill="#1e4a24" stroke="#4a9e5c" stroke-width="1.5"/>
+        <!-- Wing -->
+        <path d="M46 54 C36 48, 24 52, 22 60 C32 58, 44 62, 46 54Z" fill="#2d6335" stroke="#4a9e5c" stroke-width="1" opacity="0.9"/>
+        <!-- Head -->
+        <circle cx="60" cy="38" r="9" fill="#1e4a24" stroke="#4a9e5c" stroke-width="1.5"/>
+        <!-- Beak -->
+        <path d="M60 33 L60 26 L64 30Z" fill="#c9a84c"/>
+        <!-- Eye -->
+        <circle cx="62" cy="37" r="2" fill="#c9a84c"/>
+        <circle cx="62.5" cy="36.5" r="0.8" fill="#060f08"/>
+        <!-- Chest accent -->
+        <ellipse cx="60" cy="62" rx="7" ry="9" fill="#c9a84c" opacity="0.15"/>
+      </svg>
+    </div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">Aotearoa Born · Solana Built · Indigenous Wisdom</p>
+      <h1 class="hero-title"><span>$TIWA</span>IWAKA</h1>
+      <p class="hero-maori">"Ka ora te whenua, ka ora te tangata."</p>
+      <p class="hero-translation">When the land is well, the people are well.</p>
+
+      <div class="hero-buttons">
+        <a href="https://raydium.io" target="_blank" class="btn-primary">Buy $TIWAIWAKA</a>
+        <a href="#principles" class="btn-secondary">The 6 Principles</a>
+      </div>
+
+      <div class="hero-ca" onclick="copyCA(this)">
+        <span class="ca-label">CA</span>
+        <span class="ca-address">HjLt2fbdEpNJDGkPwq9Cjb6LDo8vjFSssnxJHFQnBAGS</span>
+        <span class="ca-copied">✓ Copied</span>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- THE BIRD -->
+  <section class="bird-section" id="bird">
+    <div class="section-inner">
+      <div class="bird-grid">
+        <div class="bird-image-wrap fade-up">
+          <div class="bird-glow"></div>
+          <div class="bird-icon-large">
+            <svg viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Large detailed fantail -->
+              <!-- Tail fan -->
+              <path d="M140 170 L62 248" stroke="#4a9e5c" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+              <path d="M140 170 L74 255" stroke="#4a9e5c" stroke-width="3.5" stroke-linecap="round" opacity="0.65"/>
+              <path d="M140 170 L94 260" stroke="#4a9e5c" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
+              <path d="M140 170 L118 264" stroke="#c9a84c" stroke-width="4.5" stroke-linecap="round"/>
+              <path d="M140 170 L140 265" stroke="#c9a84c" stroke-width="5" stroke-linecap="round"/>
+              <path d="M140 170 L162 264" stroke="#c9a84c" stroke-width="4.5" stroke-linecap="round"/>
+              <path d="M140 170 L186 260" stroke="#4a9e5c" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
+              <path d="M140 170 L206 255" stroke="#4a9e5c" stroke-width="3.5" stroke-linecap="round" opacity="0.65"/>
+              <path d="M140 170 L218 248" stroke="#4a9e5c" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+              <!-- Body -->
+              <ellipse cx="140" cy="138" rx="34" ry="42" fill="#122b15" stroke="#4a9e5c" stroke-width="2"/>
+              <!-- Wing detail -->
+              <path d="M106 128 C82 116, 52 122, 48 138 C72 134, 102 142, 106 128Z" fill="#1e4a24" stroke="#4a9e5c" stroke-width="1.5"/>
+              <path d="M174 128 C198 116, 228 122, 232 138 C208 134, 178 142, 174 128Z" fill="#1e4a24" stroke="#4a9e5c" stroke-width="1.5" opacity="0.6"/>
+              <!-- Head -->
+              <circle cx="140" cy="90" r="22" fill="#122b15" stroke="#4a9e5c" stroke-width="2"/>
+              <!-- Beak -->
+              <path d="M140 76 L140 58 L150 68Z" fill="#c9a84c"/>
+              <!-- Eye -->
+              <circle cx="146" cy="86" r="5" fill="#c9a84c"/>
+              <circle cx="147" cy="85" r="2.5" fill="#060f08"/>
+              <circle cx="148" cy="84" r="1" fill="white" opacity="0.6"/>
+              <!-- Chest blush -->
+              <ellipse cx="140" cy="148" rx="18" ry="24" fill="#c9a84c" opacity="0.1"/>
+              <!-- Forest glow rings -->
+              <circle cx="140" cy="140" r="100" stroke="#4a9e5c" stroke-width="0.5" opacity="0.08" fill="none"/>
+              <circle cx="140" cy="140" r="120" stroke="#4a9e5c" stroke-width="0.5" opacity="0.05" fill="none"/>
+            </svg>
+          </div>
+        </div>
+        <div class="bird-text fade-up">
+          <p class="section-label">The Messenger</p>
+          <h2 class="section-title">The Smallest Bird.<br>The Loudest Signal.</h2>
+          <p>The Tīwaiwaka — New Zealand's fantail — darts through the bush with relentless energy. Quick. Fearless. Unbothered by the size of anything around it.</p>
+          <div class="bird-quote">
+            "In Māori tradition, the fantail is a messenger. A companion of Tāne, guardian of the forest. When it appears, something important is near."
+          </div>
+          <p>It was the Tīwaiwaka who accompanied Māui on his journey to find fire — flitting between worlds, carrying knowledge from one realm to another. It doesn't dominate. It connects.</p>
+          <p>In a world moving faster than it can comprehend, $TIWAIWAKA is the signal in the noise — rooted in 6 living principles written by Rongoā Māori practitioner Pā Ropata / Rob McGowan.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section class="principles-section" id="principles">
+    <div class="section-inner">
+      <div class="principles-header fade-up">
+        <p class="section-label">The Foundation</p>
+        <h2 class="section-title">6 Living Principles</h2>
+        <p class="section-sub">Written by Pā Ropata / Rob McGowan — Rongoā Māori practitioner. These principles weave together knowledge, wisdom, and skill throughout the network of Aotearoa.</p>
+      </div>
+      <div class="principles-grid">
+
+        <div class="principle-card fade-up">
+          <p class="principle-number">Principle 01</p>
+          <h3 class="principle-maori">Te Whenua</h3>
+          <p class="principle-english">The Land Comes First</p>
+          <p class="principle-text">Papatūānuku is the source of all life. She is the Mother. Caring for the land is the first priority — everything else must be measured against this.</p>
+          <span class="principle-icon">🌱</span>
+        </div>
+
+        <div class="principle-card fade-up">
+          <p class="principle-number">Principle 02</p>
+          <h3 class="principle-maori">Ko Tātou Ngā Teina</h3>
+          <p class="principle-english">We Are the Last Born</p>
+          <p class="principle-text">We are not the centre of the universe, but part of it. All living creatures are our siblings. We are the youngest. We must care for those who came before us.</p>
+          <span class="principle-icon">🌿</span>
+        </div>
+
+        <div class="principle-card fade-up">
+          <p class="principle-number">Principle 03</p>
+          <h3 class="principle-maori">Te Mauri</h3>
+          <p class="principle-english">The Web of Life</p>
+          <p class="principle-text">The mauri is the web of connections that sustains all life. Its integrity matters more than any individual. Weaken one thread and the whole is diminished.</p>
+          <span class="principle-icon">🕸️</span>
+        </div>
+
+        <div class="principle-card fade-up">
+          <p class="principle-number">Principle 04</p>
+          <h3 class="principle-maori">Te Tangata</h3>
+          <p class="principle-english">We Are Part of It</p>
+          <p class="principle-text">People are not masters of the mauri — we are part of it. Our role is to care for the mauri. In doing so, we are cared for by it. We find peace. We are home.</p>
+          <span class="principle-icon">🤲</span>
+        </div>
+
+        <div class="principle-card fade-up">
+          <p class="principle-number">Principle 05</p>
+          <h3 class="principle-maori">Kāore He Tangata Nui Ake</h3>
+          <p class="principle-english">No One Is Greater</p>
+          <p class="principle-text">No individual is more important than another. Each must contribute what they have and receive what they need to be well. We are most alive when sustained by the mauri.</p>
+          <span class="principle-icon">⚖️</span>
+        </div>
+
+        <div class="principle-card fade-up">
+          <p class="principle-number">Principle 06</p>
+          <h3 class="principle-maori">Ngā Mea Iti Rawa</h3>
+          <p class="principle-english">Care for the Tiniest</p>
+          <p class="principle-text">We give special care to the smallest living creatures. Even those too small to see are the foundation that keeps all life. Caring for them is caring for the mauri itself.</p>
+          <span class="principle-icon">🦠</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT THE PROJECT -->
+  <section class="about-section" id="about">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="about-text fade-up">
+          <p class="section-label">The Project</p>
+          <h2 class="section-title">Indigenous Wisdom.<br>On-Chain.</h2>
+          <p>$TIWAIWAKA brings the 6 living principles of Tīwaiwaka onto Solana — one of the world's fastest, lowest-fee blockchains. Not as a gimmick. As a statement.</p>
+          <p>The Wiseman alpha community identified this early — a token with real builders behind it, rooted in a philosophy that has guided people for generations. In a sea of noise, this is signal.</p>
+          <p>The Tīwaiwaka Principles community is growing fast. Indigenous wisdom crossed with AI alignment, recursion, and a shared belief that the way we build technology must reflect the way we want to live.</p>
+          <div class="bird-quote" style="margin-top: 32px;">
+            "An AI that protects humanity. That generates abundance without consuming the earth. That helps us become wiser, not more dependent."
+          </div>
+        </div>
+        <div class="about-stats fade-up">
+          <div class="stat-card">
+            <div class="stat-value">Solana</div>
+            <div class="stat-label">Built on the fastest chain</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">6</div>
+            <div class="stat-label">Living principles — the foundation</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">0%</div>
+            <div class="stat-label">Tax — pure community token</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">Feb 2026</div>
+            <div class="stat-label">Launched — Aotearoa born</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOKENOMICS -->
+  <section class="token-section" id="tokenomics">
+    <div class="section-inner">
+      <div class="token-header fade-up">
+        <p class="section-label">Tokenomics</p>
+        <h2 class="section-title">Simple. Clean. Fair.</h2>
+        <p class="section-sub">No hidden allocations. No complex mechanics. Just a community token built on a foundation that matters.</p>
+      </div>
+      <div class="token-grid fade-up">
+        <div class="token-card">
+          <div class="token-card-value">1B</div>
+          <div class="token-card-label">Total Supply</div>
+        </div>
+        <div class="token-card">
+          <div class="token-card-value">0%</div>
+          <div class="token-card-label">Buy / Sell Tax</div>
+        </div>
+        <div class="token-card">
+          <div class="token-card-value">🔥</div>
+          <div class="token-card-label">LP Burned</div>
+        </div>
+        <div class="token-card">
+          <div class="token-card-value">SOL</div>
+          <div class="token-card-label">Network</div>
+        </div>
+      </div>
+      <div class="token-ca-block fade-up">
+        <div>
+          <div class="token-ca-label">Contract Address</div>
+          <div class="token-ca-value">HjLt2fbdEpNJDGkPwq9Cjb6LDo8vjFSssnxJHFQnBAGS</div>
+        </div>
+        <button class="copy-btn" onclick="copyCABtn(this)">Copy CA</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMUNITY -->
+  <section class="community-section" id="community">
+    <div class="section-inner">
+      <div class="community-inner fade-up">
+        <p class="section-label">The Whānau</p>
+        <h2 class="section-title">Join the Movement</h2>
+        <p class="section-sub">Caretakers of the web of life. 99 members and growing. Indigenous wisdom × AI alignment × Solana.</p>
+        <div class="social-links" style="margin-top: 48px;">
+          <a href="https://twitter.com/tiwaiwakasol" target="_blank" class="social-link">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.628 5.905-5.628zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            Follow on X
+          </a>
+          <a href="https://t.me/tiwaiwakasol" target="_blank" class="social-link">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.48 13.99l-2.95-.924c-.64-.203-.658-.64.135-.953l11.57-4.461c.537-.194 1.006.131.659.569z"/></svg>
+            Telegram
+          </a>
+          <a href="https://tiwaiwaka.nz" target="_blank" class="social-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            tiwaiwaka.nz
+          </a>
+          <a href="https://raydium.io" target="_blank" class="social-link btn-primary" style="border: none;">
+            Buy on Raydium →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">$TIWAIWAKA</div>
+      <p class="footer-proverb">"He iti hau māro, tū ana ki uta"</p>
+      <p class="footer-proverb-en">A small but persistent breeze reaches the shore.</p>
+      <div class="footer-links">
+        <a href="#bird">The Bird</a>
+        <a href="#principles">Principles</a>
+        <a href="#tokenomics">Tokenomics</a>
+        <a href="#community">Community</a>
+        <a href="https://tiwaiwaka.nz" target="_blank">tiwaiwaka.nz</a>
+        <a href="https://twitter.com/tiwaiwakasol" target="_blank">Twitter</a>
+      </div>
+      <p class="footer-fine">$TIWAIWAKA is a community memecoin on Solana. Not financial advice. Always do your own research. Kia kaha.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ── NAV SCROLL ──
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // ── PARTICLES ──
+    const container = document.getElementById('particles');
+    for (let i = 0; i < 18; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.width = p.style.height = (3 + Math.random() * 5) + 'px';
+      p.style.animationDuration = (8 + Math.random() * 14) + 's';
+      p.style.animationDelay = (Math.random() * 10) + 's';
+      container.appendChild(p);
+    }
+
+    // ── FADE-IN ON SCROLL ──
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    fadeEls.forEach(el => observer.observe(el));
+
+    // ── COPY CA (hero) ──
+    function copyCA(el) {
+      const addr = el.querySelector('.ca-address').textContent;
+      navigator.clipboard.writeText(addr).then(() => {
+        const copied = el.querySelector('.ca-copied');
+        copied.style.display = 'inline';
+        setTimeout(() => copied.style.display = 'none', 2000);
+      });
+    }
+
+    // ── COPY CA (tokenomics) ──
+    function copyCABtn(btn) {
+      navigator.clipboard.writeText('HjLt2fbdEpNJDGkPwq9Cjb6LDo8vjFSssnxJHFQnBAGS').then(() => {
+        const orig = btn.textContent;
+        btn.textContent = '✓ Copied!';
+        setTimeout(() => btn.textContent = orig, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

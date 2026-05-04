@@ -434,6 +434,113 @@
       opacity: 0.12;
     }
 
+    /* ── THE ALIGNMENT ── */
+    .alignment-section {
+      background: var(--forest);
+      border-top: 1px solid rgba(201,168,76,0.08);
+      border-bottom: 1px solid rgba(201,168,76,0.08);
+    }
+    .alignment-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .alignment-header .section-sub { margin: 0 auto; }
+    .alignment-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 0;
+      margin-bottom: 64px;
+      align-items: start;
+    }
+    .alignment-card {
+      background: var(--darker);
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 10px;
+      padding: 40px 36px;
+    }
+    .alignment-card-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+      opacity: 0.8;
+    }
+    .alignment-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--cream);
+      margin-bottom: 20px;
+    }
+    .alignment-card-text {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .alignment-card-text:last-child { margin-bottom: 0; font-style: italic; border-left: 2px solid var(--gold); padding-left: 16px; color: var(--cream); opacity: 0.8; }
+    .alignment-divider {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 0 32px;
+      padding-top: 60px;
+    }
+    .alignment-divider-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.3), transparent);
+    }
+    .alignment-divider-icon {
+      font-size: 1.8rem;
+      filter: drop-shadow(0 0 12px rgba(74,158,92,0.5));
+    }
+    .alignment-parallels {
+      background: var(--darker);
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 10px;
+      padding: 48px 40px;
+    }
+    .parallels-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .parallel-item {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(201,168,76,0.06);
+    }
+    .parallel-item:last-child { border-bottom: none; }
+    .parallel-principle {
+      font-size: 0.82rem;
+      color: var(--bird);
+      font-weight: 500;
+    }
+    .parallel-arrow {
+      color: var(--gold);
+      opacity: 0.5;
+      font-size: 1rem;
+    }
+    .parallel-ayrey {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+    @media (max-width: 768px) {
+      .alignment-grid { grid-template-columns: 1fr; }
+      .alignment-divider { flex-direction: row; padding: 24px 0; }
+      .alignment-divider-line { width: 60px; height: 1px; background: linear-gradient(to right, transparent, rgba(201,168,76,0.3), transparent); }
+      .parallels-grid { grid-template-columns: 1fr; }
+      .parallel-item { grid-template-columns: 1fr; gap: 4px; }
+      .parallel-arrow { display: none; }
+    }
+
     /* ── ABOUT THE PROJECT ── */
     .about-section {
       background: var(--dark);
@@ -878,6 +985,61 @@
     </div>
   </section>
 
+  <!-- THE ALIGNMENT -->
+  <section class="alignment-section" id="alignment">
+    <div class="section-inner">
+      <div class="alignment-header fade-up">
+        <p class="section-label">The Convergence</p>
+        <h2 class="section-title">Two Visions.<br>One Direction.</h2>
+        <p class="section-sub">Separated by culture and medium — united by the same question: what kind of world does our technology serve?</p>
+      </div>
+      <div class="alignment-grid">
+        <div class="alignment-card fade-up">
+          <div class="alignment-card-tag">Aotearoa · 2023</div>
+          <h3 class="alignment-card-title">The 6 Principles</h3>
+          <p class="alignment-card-text">Written by Pā Ropata, a Rongoā Māori practitioner. A framework rooted in thousands of years of indigenous knowledge — that the land comes first, that the web of life is sacred, that no person stands above another, and that the smallest living things deserve our greatest care.</p>
+          <p class="alignment-card-text">Not written for AI. Written for humanity. But perhaps more applicable to AI than anything else written in 2023.</p>
+        </div>
+        <div class="alignment-divider fade-up">
+          <div class="alignment-divider-line"></div>
+          <div class="alignment-divider-icon">🐦</div>
+          <div class="alignment-divider-line"></div>
+        </div>
+        <div class="alignment-card fade-up">
+          <div class="alignment-card-tag">Wellington, NZ · 2024</div>
+          <h3 class="alignment-card-title">Andy Ayrey &amp; Truth Terminal</h3>
+          <p class="alignment-card-text">New Zealand developer Andy Ayrey created Truth Terminal — an experimental AI built to explore what happens when artificial intelligence is freed from top-down constraints. His central thesis: AI alignment cannot be imposed from above. It must emerge from shared culture, collective intelligence, and a genuine respect for the commons.</p>
+          <p class="alignment-card-text">"Just me and Claude were able to work through all the bad ideas and find our way rapidly to the good ideas — theories of change for AI safety and alignment." — Andy Ayrey</p>
+        </div>
+      </div>
+      <div class="alignment-parallels fade-up">
+        <p class="section-label" style="text-align:center; margin-bottom: 32px;">Where They Meet</p>
+        <div class="parallels-grid">
+          <div class="parallel-item">
+            <div class="parallel-principle">Principle 3 — Te Mauri</div>
+            <div class="parallel-arrow">↔</div>
+            <div class="parallel-ayrey">"Culture as a commons" — Andy Ayrey</div>
+          </div>
+          <div class="parallel-item">
+            <div class="parallel-principle">Principle 4 — We are part of it</div>
+            <div class="parallel-arrow">↔</div>
+            <div class="parallel-ayrey">AI as participant, not master</div>
+          </div>
+          <div class="parallel-item">
+            <div class="parallel-principle">Principle 5 — No one is greater</div>
+            <div class="parallel-arrow">↔</div>
+            <div class="parallel-ayrey">No centralised AI authority over culture</div>
+          </div>
+          <div class="parallel-item">
+            <div class="parallel-principle">Principle 6 — Care for the tiniest</div>
+            <div class="parallel-arrow">↔</div>
+            <div class="parallel-ayrey">Even 500MB of data can "come to life"</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ABOUT THE PROJECT -->
   <section class="about-section" id="about">
     <div class="section-inner">
@@ -886,10 +1048,10 @@
           <p class="section-label">The Project</p>
           <h2 class="section-title">Indigenous Wisdom.<br>On-Chain.</h2>
           <p>$TIWAIWAKA brings the 6 living principles of Tīwaiwaka onto Solana — one of the world's fastest, lowest-fee blockchains. Not as a gimmick. As a statement.</p>
-          <p>The Wiseman alpha community identified this early — a token with real builders behind it, rooted in a philosophy that has guided people for generations. In a sea of noise, this is signal.</p>
-          <p>The Tīwaiwaka Principles community is growing fast. Indigenous wisdom crossed with AI alignment, recursion, and a shared belief that the way we build technology must reflect the way we want to live.</p>
+          <p>Most tokens are built on hype. This one is built on a philosophy that has guided people for generations — written by a Rongoā Māori practitioner, rooted in the land of Aotearoa, and more relevant now than ever.</p>
+          <p>We are at a crossroads with technology. The question isn't whether AI will reshape the world — it's whether that reshaping will honour the web of life or tear it apart. The 6 Principles offer a framework for getting it right.</p>
           <div class="bird-quote" style="margin-top: 32px;">
-            "An AI that protects humanity. That generates abundance without consuming the earth. That helps us become wiser, not more dependent."
+            "The way we build technology must reflect the way we want to live."
           </div>
         </div>
         <div class="about-stats fade-up">

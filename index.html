@@ -1055,7 +1055,15 @@
     }
     function fmtPrice(p) {
       const n = parseFloat(p);
-      if (n < 0.0001) return '$' + n.toExponential(2);
+      if (n === 0) return '$0';
+      // Find how many leading zeros after decimal, then show 4 significant digits
+      const str = n.toFixed(12).replace(/0+$/, '');
+      const match = str.match(/^0\.(0*)(\d+)/);
+      if (match) {
+        const zeros = match[1].length;
+        const sig = match[2].slice(0, 4);
+        return '$0.' + '0'.repeat(zeros) + sig;
+      }
       return '$' + n.toFixed(6);
     }
 

@@ -902,11 +902,11 @@
             <div class="stat-label">Living principles — the foundation</div>
           </div>
           <div class="stat-card">
-            <div class="stat-value">0%</div>
-            <div class="stat-label">Tax — pure community token</div>
+            <div class="stat-value">Meteora</div>
+            <div class="stat-label">DEX — dynamic liquidity pool</div>
           </div>
           <div class="stat-card">
-            <div class="stat-value">Feb 2026</div>
+            <div class="stat-value" id="live-launch">—</div>
             <div class="stat-label">Launched — Aotearoa born</div>
           </div>
         </div>
@@ -1077,6 +1077,13 @@
         document.getElementById('live-mcap').textContent  = mcap  ? fmt(mcap)               : '—';
         document.getElementById('live-liq').textContent   = pair.liquidity?.usd ? fmt(pair.liquidity.usd) : '—';
         document.getElementById('live-price').textContent = pair.priceUsd ? fmtPrice(pair.priceUsd) : '—';
+        if (pair.pairCreatedAt) {
+          const d = new Date(pair.pairCreatedAt);
+          const mo = d.toLocaleString('en-US', { month: 'short' });
+          const yr = d.getFullYear();
+          const el = document.getElementById('live-launch');
+          if (el) el.textContent = mo + ' ' + yr;
+        }
       } catch(e) { /* silent fail — dashes stay */ }
     }
 
